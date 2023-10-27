@@ -19,5 +19,9 @@ AZURE_SUBSCRIPTION_ID=
 AZURE_CLIENT_ID=
 AZURE_TENANT_ID=
 AZURE_CLIENT_SECRET=
-PASSWORD_SECRET=<secret to calculate password secret>
+PASSWORD_SECRET=
+EMAIL_ENDPOINT=
+EMAIL_SENDER=
 ```
+
+`PASSWORD_SECRET` is used to generate deterministic passwords using sha256
