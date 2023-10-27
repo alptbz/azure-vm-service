@@ -4,3 +4,5 @@ azure-mgmt-network
 azure-identity
 python-dotenv
 azure-communication-email
+typer
+typing_extensions

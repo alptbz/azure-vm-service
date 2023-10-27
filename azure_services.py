@@ -60,7 +60,7 @@ class AzureService:
         poller = client.begin_send(message)
         poller.wait()
 
-    def delete_vm(self, vm_name):
+    def delete_vm(self, vm_name) -> bool:
         resource_client = ResourceManagementClient(self.credential, self.subscription_id)
 
         resource_list = list(resource_client.resources.list_by_resource_group(self.resource_group_name,
@@ -74,6 +74,9 @@ class AzureService:
 
         vms = [x for x in resource_list if x.type == "Microsoft.Compute/virtualMachines" and x.name.startswith(vm_name)]
 
+        if len(vms) == 0:
+            return False
+
         for vm in vms:
             delete_req = resource_client.resources.begin_delete_by_id(vm.id, "2022-11-01")
             delete_req.wait()
@@ -81,6 +84,8 @@ class AzureService:
         for res in resource_to_delete:
             delete_req = resource_client.resources.begin_delete_by_id(res.id, "2022-11-01")
             delete_req.wait()
+
+        return True
 
     def delete_all(self) -> List[str]:
         resource_client = ResourceManagementClient(self.credential, self.subscription_id)
@@ -91,8 +96,8 @@ class AzureService:
         vms = [x for x in resource_list if x.type == "Microsoft.Compute/virtualMachines"]
 
         for vm in vms:
-            deleted_vm_names.append(vm.name)
-            self.delete_vm(vm.name)
+            if self.delete_vm(vm.name):
+                deleted_vm_names.append(vm.name)
 
         return deleted_vm_names
 
