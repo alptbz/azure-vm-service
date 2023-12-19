@@ -194,7 +194,7 @@
                     }
                 },
                 "priority": "Spot",
-                "evictionPolicy": "Delete",
+                "evictionPolicy": "Deallocate",
                 "billingProfile": {
                     "maxPrice": -1
                 },
