@@ -12,7 +12,9 @@ app = typer.Typer()
 @app.command(help="list alls vms with credentials", name="list")
 def list_vms():
     azure_service = azure_services.AzureService("LabVms")
-    pprint(azure_service.list())
+    list_of_vms = azure_service.list()
+    pprint(list_of_vms)
+    print(f"Found {len(list_of_vms)} vms")
 
 
 @app.command(help="create new vm and send credentials to email", name="create")
