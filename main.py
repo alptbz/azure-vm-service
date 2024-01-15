@@ -1,4 +1,6 @@
 from pprint import pprint
+from typing import List
+
 import typer
 import azure_services
 from dotenv import load_dotenv
@@ -18,15 +20,19 @@ def list_vms():
 
 
 @app.command(help="create new vm and send credentials to email", name="create")
-def create_vm(email: str):
-    vm_name = helper.generate_vm_name_out_of_email(email)
-    azure_service = azure_services.AzureService("LabVms")
-    print(f"Creating VM {vm_name}...")
-    azure_vm = azure_service.create_vm(vm_name)
-    print("Done")
-    print(f"Sending E-mail for {vm_name} to {email}...")
-    azure_service.send_email(email, "Your VM Credentials", str(azure_vm))
-    print("Done")
+def create_vm(emails: List[str]):
+    i = 0
+    total = len(emails)
+    for email in emails:
+        vm_name = helper.generate_vm_name_out_of_email(email)
+        azure_service = azure_services.AzureService("LabVms")
+        print(f"Creating VM {vm_name}...")
+        azure_vm = azure_service.create_vm(vm_name)
+        print(f"Sending E-mail for {vm_name} to {email}...")
+        azure_service.send_email(email, "Your VM Credentials", str(azure_vm))
+        i += 1
+        print(f"Done {i}/{total}")
+
 
 
 @app.command(help="delete single vm", name="delete")
