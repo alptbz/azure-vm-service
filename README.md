@@ -1,6 +1,9 @@
-# Azure VM Service
+# Azure VM CLI Tool
 
-CLI tool to create vm and send credentials via E-Mail
+CLI tool to create vms and send credentials via E-Mail to students. 
+
+# Background
+Rapid deployment tool for providing Virtual Machines to students in educational course [Modul 123 - HTTP](https://gitlab.com/alptbz/m123/-/tree/main/07_HTTP/HTTP_Webserver?ref_type=heads).
 
 # Ressources
 
