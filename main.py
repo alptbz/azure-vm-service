@@ -35,14 +35,18 @@ def create_vm(emails: List[str]):
 
 
 
-@app.command(help="delete single vm", name="delete")
-def delete(vm_name: str):
-    azure_service = azure_services.AzureService("LabVms")
-    print("Deleting...")
-    if azure_service.delete_vm(vm_name):
-        print("Done")
-    else:
-        print("nothing to delete")
+@app.command(help="delete single or multiple vms", name="delete")
+def delete(vm_names: List[str]):
+    i = 0
+    total = len(vm_names)
+    for vm_name in vm_names:
+        azure_service = azure_services.AzureService("LabVms")
+        i += 1
+        print(f"Deleting {vm_name}...")
+        if azure_service.delete_vm(vm_name):
+            print(f"Done {i}/{total}")
+        else:
+            print(f"nothing to delete {i}/{total}")
 
 
 @app.command(help="delete all vms in resource group", name="delete-all")
